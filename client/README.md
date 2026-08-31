@@ -1,16 +1,35 @@
-# React + Vite
+## 🌐 Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The frontend is built using **React** with **Vite** for fast development and optimized builds.  
+It manages real-time peer-to-peer video streaming via **WebRTC**, handles signaling and live chat through **Socket.io**, and integrates **Clerk** for a secure, seamless authentication experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📦 Frontend Dependencies
 
-## React Compiler
+### Core
+- **react** – UI library
+- **react-dom** – React DOM renderer
+- **react-router-dom** – Client-side routing
+- **socket.io-client** – WebSockets for WebRTC signaling and chat
+- **@clerk/clerk-react** – Frontend user authentication and UI components
+- **react-hot-toast** – Toast notifications for meeting and connection feedback
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Dev Tools
+- **vite** – Development server & bundler
+- **eslint** – Code linting
+- **@vitejs/plugin-react** – React support for Vite
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## ⚙️ Frontend Environment Variables
+
+Create a `.env` file inside the **client** directory and add the following variables:
+
+```env
+# Clerk Publishable Key 
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_your_clerk_publishable_key_here
+
+# Backend API URL
+VITE_BASE_URL=http://localhost:3000
+```
