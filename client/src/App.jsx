@@ -14,8 +14,9 @@ function App() {
       <Toaster position="top-center" />
       <Routes>
         {/* Public Routes */}
-        <Route path="/login" element={<Login mode="login" />} />
-        <Route path="/register" element={<Login mode="register" />} />
+     {/* Public Routes */}
+      <Route path="/login/*" element={<Login mode="login" />} />
+      <Route path="/register/*" element={<Login mode="register" />} />
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
