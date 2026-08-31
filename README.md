@@ -4,12 +4,6 @@ A production-ready, real-time video conferencing application built with **React,
 This project implements **secure authentication via Clerk**, **peer-to-peer video streaming**, and a **serverless PostgreSQL database using Neon**.
 
 ---
-
-## Screenshots
-
-![App Screenshot](client\src\assets\online_meet.png)
-
----
 ## ✨ Features
 
 - Real-time Video & Audio via WebRTC
