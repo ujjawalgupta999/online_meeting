@@ -7,10 +7,9 @@ This project implements **secure authentication via Clerk**, **peer-to-peer vide
 
 ## Screenshots
 
-![App Screenshot](client\src\assets\online_meet.png) 
+![App Screenshot](client\src\assets\online_meet.png)
 
 ---
-
 ## ✨ Features
 
 - Real-time Video & Audio via WebRTC
