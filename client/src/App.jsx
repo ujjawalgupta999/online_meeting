@@ -1,36 +1,39 @@
-import React from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import { Navigate, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
-import ProtectedRoute from './components/ProtectedRoute'
-import Protectedlayout from './components/Protectedlayout'
 import Dashboard from './pages/Dashboard'
-import Session from './pages/Session'
+import Sessions from './pages/Sessions'
 import Pricing from './pages/Pricing'
 import MeetingRoom from './pages/MeetingRoom'
-const App = () => {
+import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedLayout from './components/ProtectedLayout'
+
+function App() {
   return (
-  <>
-  <Toaster/>
-  <Routes>
-    {/* public routes */}
-    <Route path="/login" element={<Login mode = "login" />} />
-    <Route path="/register" element={<Login mode = "register" />} />
+    <>
+      <Toaster position="top-center" />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/login" element={<Login mode="login" />} />
+        <Route path="/register" element={<Login mode="register" />} />
 
-    {/* private routes */}
-    <Route element={<ProtectedRoute/>}>
-    <Route element={ <Protectedlayout /> }>
-    <Route  path ="/dashboard" element={<Dashboard />} />
-    <Route  path ="/session" element={<Session />} />
-    <Route  path ="/pricing" element={<Pricing />} />
-    </Route>
-    <Route path="/meeting/:meetingId" element={<MeetingRoom/>}/>
-    </Route>
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          {/* Layout with Navbar & Footer */}
+          <Route element={<ProtectedLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/sessions" element={<Sessions />} />
+            <Route path="/pricing" element={<Pricing />} />
+          </Route>
+          
+          {/* Meeting Room (No Navbar/Footer) */}
+          <Route path="/meeting/:id" element={<MeetingRoom />} />
+        </Route>
 
-    {/* other routes */}
-        <Route path="*" element={<Navigate to="/dashboard" replace/>}/>
-  </Routes>
-  </>
+        {/* Catch-all unregistered routes */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </>
   )
 }
 

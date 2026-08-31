@@ -1,75 +1,56 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, History, Sparkles } from 'lucide-react'; 
-import { UserButton, useUser } from '@clerk/clerk-react';
+import { Link, useLocation } from 'react-router-dom'
+import { UserButton, useUser } from '@clerk/clerk-react'
+import { LayoutDashboard, History, Asterisk } from 'lucide-react'
 
 const Navbar = () => {
-  const { isLoaded, isSignedIn, user } = useUser();
-  const location = useLocation();
-
-  // Extract the username dynamically from Clerk's user object
-  const username = user?.fullName || 
-                   user?.firstName || 
-                   user?.primaryEmailAddress?.emailAddress?.split('@')[0] || 
-                   'User';
+  const { isLoaded, isSignedIn, user } = useUser()
+  const location = useLocation()
+  
+  const username = user?.firstName || user?.primaryEmailAddress?.emailAddress?.split('@')[0] || 'User'
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200">
-      
-      {/* --- Left Column: Brand Logo & Navigation Links --- */}
-      <div className="flex items-center gap-6">
-        <Link to="/dashboard" className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Meetup Logo" className="w-6.5 h-6.5" />
-          <span className="text-2xl font-medium tracking-tight flex items-center">
-            meetup<span className="text-blue-600">.</span>
-          </span>
-        </Link>
+    <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        
+        {/* Brand Logo & Navigation */}
+        <div className="flex items-center gap-6">
+          <Link to="/dashboard" className="flex items-center gap-2">
+            <img src="/logo.svg" alt="Meetup Logo" className="size-6.5" />
+            <span className="text-2xl font-medium tracking-tight text-slate-900 flex items-center">
+              Meetup<span className="text-primary">.</span>
+            </span>
+          </Link>
 
-        {/* Display Navigation Links only if the user is signed in */}
+          {isSignedIn && (
+            <nav className="hidden md:flex items-center gap-1 ml-4">
+              <Link to="/dashboard" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${location.pathname === '/dashboard' ? 'bg-blue-50 text-primary' : 'text-slate-600 hover:bg-slate-50'}`}>
+                <LayoutDashboard size={16} /> Dashboard
+              </Link>
+              <Link to="/sessions" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${location.pathname === '/sessions' ? 'bg-blue-50 text-primary' : 'text-slate-600 hover:bg-slate-50'}`}>
+                <History size={16} /> Sessions
+              </Link>
+              <Link to="/pricing" className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${location.pathname === '/pricing' ? 'bg-blue-50 text-primary' : 'text-slate-600 hover:bg-slate-50'}`}>
+                <Asterisk size={16} /> Pricing
+              </Link>
+            </nav>
+          )}
+        </div>
+
+        {/* User Profile */}
         {isSignedIn && (
-          <nav className="hidden md:flex items-center gap-4 ml-6">
-            <Link
-              to="/dashboard"
-              className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-                location.pathname === '/dashboard'
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-              }`}
-            >
-              <LayoutDashboard className="w-4 h-4" />
-              Dashboard
+          <div className="flex items-center gap-4">
+            <Link to="/sessions" className="md:hidden text-slate-500 hover:text-slate-700">
+              <History size={20} />
             </Link>
-            
-            <Link
-              to="/sessions"
-              className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-                location.pathname === '/sessions'
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-              }`}
-            >
-              <History className="w-4 h-4" />
-              Sessions
-            </Link>
-
-            <Link
-              to="/pricing"
-              className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-                location.pathname === '/pricing'
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-              }`}
-            >
-              <Sparkles className="w-4 h-4" />
-              Pricing
-            </Link>
-          </nav>
+            <span className="hidden sm:block text-sm text-slate-600">
+              Welcome, <span className="font-medium text-slate-900">{username}</span>
+            </span>
+            <UserButton afterSignOutUrl="/login" />
+          </div>
         )}
       </div>
-
-
     </header>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
