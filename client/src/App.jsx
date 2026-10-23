@@ -6,7 +6,7 @@ import Sessions from './pages/Sessions'
 import Pricing from './pages/Pricing'
 import MeetingRoom from './pages/MeetingRoom'
 import ProtectedRoute from './components/ProtectedRoute'
-import ProtectedLayout from './components/ProtectedLayout'
+import ProtectedLayout from './components/Protectedlayout'
 
 function App() {
   return (

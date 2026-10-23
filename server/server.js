@@ -17,9 +17,12 @@ const server = http.createServer(app);
 await initDB();
 
 // 2. Base Middleware
-app.use(cors({ 
-  origin: process.env.ORIGINS?.split(',') || ['http://localhost:5173'], 
-  credentials: true 
+const cors = require('cors');
+
+app.use(cors({
+  origin: ['https://onlinemeeet.netlify.app', 'http://localhost:5173'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
 }));
 app.use(cookieParser());
 
