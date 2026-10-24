@@ -4,13 +4,12 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import { Server } from 'socket.io';
-import { clerkMiddleware } from '@clerk/express'; // Used globally for parsing clerk req contexts
+import { clerkMiddleware } from '@clerk/express';
 import { setupSocketIO } from './socket.js';
 import { initDB } from './config/db.js';
 import meetingRoutes from './routes/meetingRoutes.js';
 import { handleClerkWebhook } from './controllers/webhookController.js';
-const express = require('express');
-const cors = require('cors');
+
 const app = express();
 
 // 1. CORS MUST come first
@@ -19,17 +18,12 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
-
-
 app.options('*', cors());
 
 const server = http.createServer(app);
 
-// 1. Initialize Neon Database Schema
+// 2. Initialize Neon Database Schema
 await initDB();
-
-
-
 app.use(cookieParser());
 
 // 3. Clerk Webhook Route (MUST use raw JSON parser)
@@ -37,10 +31,12 @@ app.use('/api/clerk', express.raw({ type: 'application/json' }), handleClerkWebh
 
 // 4. Standard Middleware
 app.use(express.json());
-app.use(clerkMiddleware()); // Parses authentication tokens automatically for REST endpoints
+app.use(clerkMiddleware());
 
 // 5. REST API Routes
 app.use('/api/meetings', meetingRoutes);
+
+// ... rest of your socket.io and server code ...
 
 // 6. Root status check
 app.get('/', (req, res) => res.send('API is live'));
