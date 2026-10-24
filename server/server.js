@@ -18,7 +18,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
-app.options('*', cors());
+// app.options('/(.*)', cors());
 
 const server = http.createServer(app);
 
@@ -59,3 +59,5 @@ app.use((err, req, res, next) => {
 // 9. Start Server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app;
