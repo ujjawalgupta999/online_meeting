@@ -9,21 +9,27 @@ import { setupSocketIO } from './socket.js';
 import { initDB } from './config/db.js';
 import meetingRoutes from './routes/meetingRoutes.js';
 import { handleClerkWebhook } from './controllers/webhookController.js';
-
-const app = express();
-const server = http.createServer(app);
-
-// 1. Initialize Neon Database Schema
-await initDB();
-
-// 2. Base Middleware
+const express = require('express');
 const cors = require('cors');
+const app = express();
 
+// 1. CORS MUST come first
 app.use(cors({
   origin: ['https://onlinemeeet.netlify.app', 'http://localhost:5173'], 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
+
+
+app.options('*', cors());
+
+const server = http.createServer(app);
+
+// 1. Initialize Neon Database Schema
+await initDB();
+
+
+
 app.use(cookieParser());
 
 // 3. Clerk Webhook Route (MUST use raw JSON parser)
